@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.snr.webapp.dao.NoticeDao">
+	<select id="get" resultType="com.snr.webapp.entity.NoticeView">
+		select * from NoticeView where id=#{id}
+	</select>
+	<select id="getList" resultType="com.snr.webapp.entity.NoticeView">
+		select * from NoticeView where ${field} like '%${query}%' order by regDate DESC limit ${(page-1)*10},10
+	</select>
+	<select id="getPrev" resultType="com.snr.webapp.entity.NoticeView">
+		select * from NoticeView where id &lt; CAST(#{id} as UNSIGNED) order by regDate DESC limit 1
+	</select>
+	<select id="getNext" resultType="com.snr.webapp.entity.NoticeView">
+		select * from NoticeView where id &gt; CAST(#{id} as UNSIGNED) order by regDate ASC limit 1
+	</select> 
+	<select id="getNextId" resultType="String">
+		select ifnull(MAX(CAST(id as unsigned)),0)+1 from Notice
+	</select>
+	<insert id="insert" parameterType="com.snr.webapp.entity.Notice">
+		<selectKey order="BEFORE" keyProperty="id" resultType="String">
+			select ifnull(MAX(CAST(id as unsigned)),0)+1 from Notice
+		</selectKey>
+		insert into Notice(id, title, content, writerId) values(#{id}, #{title}, #{content}, #{writerId});
+	</insert> 
+</mapper>
