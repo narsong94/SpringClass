@@ -390,9 +390,10 @@
 
 		});
 
-		//--------Template 태그 이용한 노드 복제--------------------------------
+		//--------Template 태그 이용한 노드 복제 & Ajax--------------------------------
 		window.addEventListener("load", function() {
 			var cloneBtn = document.querySelector("#ex2-clone input[value='Template 복제']");
+			var ajaxBtn = document.querySelector("#ex2-clone input[value='Ajax 요청']");
 			var tbody = document.querySelector("#ex2-clone tbody");
 			var template = document.querySelector("#ex2-clone template");
 			
@@ -401,6 +402,10 @@
 				{id:"2", title:"타이틀2", noticeId:"아이디2"},
 				{id:"3", title:"타이틀3", noticeId:"아이디3"}
 			];
+			
+			ajaxBtn.onclick = function(e) {
+				var xhr = new XmlHttpRequest();
+			}
 
 			cloneBtn.onclick = function(e) {
 				if('content' in template){
@@ -598,12 +603,13 @@
 		</div>
 	</div>
 
-	<!-- Template 태그 이용한 노드 복제 -->
+	<!-- Template 태그 이용한 노드 복제 & Ajax -->
 	<p>
 	<hr />
 	<div id="ex2-clone">
 		<div>
 			<input type="button" value="Template 복제" />
+			<input type="button" value="Ajax 요청" />
 		</div>
 		<div id="clone-container">
 			<table border="1">
