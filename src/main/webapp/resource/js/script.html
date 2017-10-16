@@ -404,7 +404,13 @@
 			];
 			
 			ajaxBtn.onclick = function(e) {
-				var xhr = new XmlHttpRequest();
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function(e){
+					if(xhr.readyState == 4)
+						data = eval(xhr.responseText);
+				}
+				xhr.open("GET", "../../customer/notice-ajax", true);
+				xhr.send();
 			}
 
 			cloneBtn.onclick = function(e) {

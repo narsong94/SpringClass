@@ -22,7 +22,12 @@ public class NewlecCalculator implements Calculator {
 
 	@Override
 	public int div(int x, int y) {
-		int result = x/y;
+		int result = 0;
+		try {
+		result = x/y;
+		}catch(Exception e){
+			System.out.println("0으로 나누는 예외 발생");
+		}
 		return result;
 	}
 

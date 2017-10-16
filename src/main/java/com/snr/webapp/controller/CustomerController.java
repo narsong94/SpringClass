@@ -48,6 +48,12 @@ public class CustomerController {
 		Gson gson = new Gson();
 		json = gson.toJson(list);
 		
+		try {
+			Thread.sleep(3000);
+		}catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		return json;
 	}
 	
