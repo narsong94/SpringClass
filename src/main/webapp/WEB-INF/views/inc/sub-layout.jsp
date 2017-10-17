@@ -29,10 +29,8 @@
 			<!-- aside 부분 -->
 			<tiles:insertAttribute name="aside" />
 			<!-- --------------------------- main --------------------------------------- -->
-			
 			<!-- content 부분 -->
 			<tiles:insertAttribute name="main" />
-			
 		</div>
 	</div>
 	<!-- ------------------- <footer> --------------------------------------- -->
