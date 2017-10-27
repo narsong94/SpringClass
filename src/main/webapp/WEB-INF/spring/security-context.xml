@@ -8,20 +8,20 @@
 						http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
-		<intercept-url pattern="/student/*" access="hasRole('ROLE_STUDENT')"/>
-		<intercept-url pattern="/teacher/*" access="hasRole('ROLE_TEACHER')"/>
-		<!-- <intercept-url pattern="/customer/*" access="hasRole('ROLE_USER')"/> -->
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/student/**" access="hasRole('ROLE_STUDENT')"/>
+		<intercept-url pattern="/teacher/**" access="hasRole('ROLE_TEACHER')"/>
+		<intercept-url pattern="/customer/**" access="hasRole('ROLE_USER')"/> 
 		
 		<form-login login-page="/member/login" default-target-url="/index"/>
+		<logout logout-success-url="/index"/>
 	</http>
 
 	<authentication-manager>
 		<authentication-provider>
-			<user-service>
-				<user name="newlec" password="111" authorities="ROLE_USER, ROLE_ADMIN"/>
-				<user name="dragon" password="111" authorities="ROLE_USER"/>
-			</user-service>
+			<jdbc-user-service data-source-ref="dataSource" 
+								users-by-username-query="select `id`, pwd `password`, 1 enabled from Member where id=?;" 
+								authorities-by-username-query="select id, 'ROLE_USER' authorities from Member where id=?;"/>
 		</authentication-provider>
 	</authentication-manager>
 

@@ -86,4 +86,8 @@
 				</table>
 			</div>			
 			
+			<div>
+				<a href="notice/edit">수정하기</a>
+			</div>
+			
 	</main>

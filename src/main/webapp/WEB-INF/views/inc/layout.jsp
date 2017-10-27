@@ -10,8 +10,8 @@
 <!-- <meta name="viewport" content="width=device-width,initial-scale=1"> -->
 <title>공지사항목록</title>
 
-<link href="${ctx}/resource/css/layout.css" type="text/css" rel="stylesheet" />
-<link href="${ctx}/resource/css/<tiles:getAsString name="css"/>" type="text/css" rel="stylesheet" />
+<%-- <link href="${ctx}/resource/css/layout.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/resource/css/<tiles:getAsString name="css"/>" type="text/css" rel="stylesheet" /> --%>
 </head>
 <body>
 	<!-- header 부분 -->

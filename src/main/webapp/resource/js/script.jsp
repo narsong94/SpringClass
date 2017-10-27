@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
+<meta content="charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -159,7 +161,7 @@
                   //countLabel.textContent = count - 1; // 속성이 아닌 자식이 text인 경우 그것을 사용하고 싶을 때 textContent
                }, 30); // setTimeout은 한번만, setInterval은 계속
          }
-      }
+      };
 
       //--------open & window------------------------------
 
@@ -455,11 +457,70 @@
                
                   // 복제된 clone(tr)을 노드 트리에 추가
                   tbody.appendChild(clone);
-               }
-            }
-         }
+               };
+            };
+         };
 
       });
+      
+      /* <!--  Ajax로 파일 전송하기와 트리거 -->  */
+      window.addEventListener("load", function() {
+    	  var fileInput = document.querySelector("#ex3-upload input");
+          var spanBtn = document.querySelector("#ex3-upload span");
+          var progressBar = document.querySelector("#ex3-upload #progress-bar");
+          progressBar.style.width = "0px";
+          
+          var fileViewer = document.querySelector("#ex3-upload ul");
+          
+          var xhr = new XMLHttpRequest();
+           xhr.onload = function(e){
+               
+               var files = JSON.parse(e.target.responseText);
+          
+               for(var i=0; i<files.length; i++){
+               		var li = document.createElement("li");
+               		li.textContent = files[i];
+               		fileViewer.appendChild(li);               
+               }
+           };
+           xhr.open("GET", "../../file-list");
+           xhr.send();
+          
+          spanBtn.onclick = function(e) {
+        	  var event = new MouseEvent("click", {
+        		  'view':window,
+        		  'bubbles':true,
+        		  'cancelable':true
+        	  });
+        	  
+        	  fileInput.dispatchEvent(event);
+        	  fileInput.onchange = function(){
+        		  var file = fileInput.files[0];
+        		  
+        		  var formData = new FormData();
+        		  formData.append("title", "테스트");
+        		  formData.append("file", file);
+        		  
+        		  var xhr = new XMLHttpRequest();
+        		  xhr.upload.onprogress = function(e){
+        			  console.log(Math.round(e.loaded * 100 / e.total) + "%");
+        			  
+        			  percentage = Math.round(e.loaded * 100 / e.total);
+        			  progressBar.textContent = percentage + "%";
+        			  progressBar.style.width = percentage + "px";
+        		  };
+                  xhr.onload = function(){
+                      
+                  };
+                  xhr.onerror=function(e){
+                    alert("예기치 못한 오류가 발생 !!!!!!!!!!!!!!!!!!!!!!!") 
+                  };
+                  xhr.open("POST", "../../upload?${_csrf.parameterName}=${_csrf.token}");
+                  xhr.send(formData);
+        	  };
+          };
+
+        }); 
    </script>
 
    <!-- 더하기 html -->
@@ -668,11 +729,14 @@
    </div>
    
    
-    <!--  Ajax로 파일 전송하기와 트리거 -->
+    <!--  Ajax로 파일 전송하기와 트리거 & 파일목록뷰어-->
    <p>
    <hr />
    <div id="ex3-upload">
-      <form action="../../upload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+   <input type="file" style="display: none;"/>
+   <span style="border: 1px solid #999; border-radius:5px; padding: 3px; background: orange; cursor: pointer;">파일선택</span>
+   <span id="progress-bar" style="background: orange; display: inline-block;"></span>
+   <%-- <form action="../../upload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
         <div>
             <input type="submit" value="전송" />
             <input type="button" value="Ajax 요청" />
@@ -694,7 +758,11 @@
             </table>
             
         </div>
-      </form>
+      </form> --%>
+   		<div>
+   			<ul>
+   			</ul>
+   		</div>
    </div>
    
 
