@@ -95,6 +95,7 @@
 				img.attr("src", "https://static.independent.co.uk/s3fs-public/styles/article_small/public/thumbnails/image/2017/07/02/17/teacup-puppy.jpg");				
 				container.append(img);
 				img.click(remove); */
+				
 				// jQuery 식 스타일
 				$("<img src='http://www.telegraph.co.uk/content/dam/news/2017/06/16/TELEMMGLPICT000132082481-xlarge_trans_NvBQzQNjv4BqgsaO8O78rhmZrDxTlQBjdO0Jyi0jPPD6Zx1hiwTPhlc.jpeg' />")
 				.appendTo(container/* 부모 */).click(remove);
