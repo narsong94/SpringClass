@@ -98,7 +98,9 @@
 						img.click(remove); */
 
 						// jQuery 식 스타일
-						$("<img src='http://media3.giphy.com/media/kEKcOWl8RMLde/giphy.gif' />").appendTo(container/* 부모 */).click(remove);
+						$(
+								"<img src='http://media3.giphy.com/media/kEKcOWl8RMLde/giphy.gif' />")
+								.appendTo(container/* 부모 */).click(remove);
 
 						// How to 2 (성능에 좋지 않지만 편리함.-> 한두개 넣는 상황의 성능에 영향을 주지 않을 거라면 이를 사용)
 						//container.html('<img onClick="remove()" src="http://www.telegraph.co.uk/content/dam/news/2017/06/16/TELEMMGLPICT000132082481-xlarge_trans_NvBQzQNjv4BqgsaO8O78rhmZrDxTlQBjdO0Jyi0jPPD6Zx1hiwTPhlc.jpeg');
@@ -210,89 +212,115 @@
 				}
 			});
 		});
-		
-		//--------------- 노드복제 예제 ---------------
-		$(function(){   
-			   var cloneButton = $("#ex-clone input[value='단순복제']");
-			   var tbody = $("#ex-clone tbody");
-			      
-			   cloneButton.click(function(e){
-				   
-			      tbody.find("tr").clone(true).appendTo(tbody);
-			   });
-			   
-		});
-		
-		//--------------- Template 태그를 이용한 노드복제 and Ajax 요청 예제 ---------------
-		$(function(){   
-   			var cloneBtn = $("#ex2-clone input[value='단순복제']");
-   			var ajaxBtn = $("#ex2-clone input[value='Ajax요청']");
-   			var tbody = $("#ex2-clone tbody");
-   			var template = $("#ex2-clone template");
-   			var container = $("#ex2-clone div:first-child");
-   
-   			var data = [
-      			{id:"1", title:"자바스크립트 야호~", writerId:"newlec"},
-      			{id:"2", title:"자바도 야호~", writerId:"dragon"},
-      			{id:"3", title:"둘다 ~", writerId:"wa~~~"}
-   			];
-   			
-   			// 1. 복제하기
-   			cloneBtn.click(function(e){
-   				
-   				// jQuery 객체의 필드와 속성
-   				/* 
-   				
-   							HTML <----------------------------> DOM =================================> jQuery
-   					<input checked="checked"/>				obj.checkd; // true/false 나옴		jobj.attr("checked");	// 문자그대로 원하면 선택
-   					<input checked />															jobj.prop("checked");	// DOM의 특성값 원하면 선택
-   					<input required="required"/>
-   					<input required />
-   						
-   				
-   				*/
-   				
-      			if('content' in template.get(0)){ 	// 현 브라우저가 template 태그 지원하는지에 대한 확인
-      				
-         			for(var i=0; i<data.length;i++)
-         			{
-            			var clone = $(document.importNode(template.prop("content"),true));	// jQuery가 지원해주지 않아 그대로 사용하고 jQuery로 만들어줌
-            
-            			var tds = clone.find("td");
-            			//tds.eq(0).html(tds.eq(0).html() + data[i].id);		// get(0)은 DOM으로 내릴 때
-            			tds.eq(0).append(data[i].id);	// 위의 방법과 동일
-            			tds.eq(1).text(data[i].title);	
-            			tds.eq(2).text(data[i].writerId);
-            
-            			tbody.append(clone);         
-         			}
-         
-      			}
-      
-   			});
-   
-   			/* ajaxBtn.click(function(e){
-   				
-      			var xhr = new XMLHttpRequest();
-      			
-      			xhr.load(function(){
-         			data = JSON.parse(xhr.responseText);
-         			container.removeChild(container.lastChild);
-      			});
-      
-      			xhr.error(function(e){
-        			alert("예기치 못한 오류가 발생하였습니다.");
-      			});
-      
-      			xhr.open("GET", "../../customer/notice-ajax", true);
-      			xhr.send();   
 
-      			var img = document.createElement("img");
-      			img.src = "../images/ajax-loader.gif";
-      			container.append(img);
-      
-   			}); */
-   
+		//--------------- 노드복제 예제 ---------------
+		$(function() {
+			var cloneButton = $("#ex-clone input[value='단순복제']");
+			var tbody = $("#ex-clone tbody");
+
+			cloneButton.click(function(e) {
+
+				tbody.find("tr").clone(true).appendTo(tbody);
+			});
+
+		});
+
+		//--------------- Template 태그를 이용한 노드복제 and Ajax 요청 예제 ---------------
+		$(function() {
+			var cloneBtn = $("#ex2-clone input[value='단순복제']");
+			var ajaxBtn = $("#ex2-clone input[value='Ajax요청']");
+			var tbody = $("#ex2-clone tbody");
+			var template = $("#ex2-clone template");
+			var container = $("#ex2-clone div:first-child");
+
+			var data = [ {
+				id : "1",
+				title : "자바스크립트 야호~",
+				writerId : "newlec"
+			}, {
+				id : "2",
+				title : "자바도 야호~",
+				writerId : "dragon"
+			}, {
+				id : "3",
+				title : "둘다 ~",
+				writerId : "wa~~~"
+			} ];
+
+			// 1. 복제하기
+			cloneBtn.click(function(e) {
+
+				// jQuery 객체의 필드와 속성
+				/* 
+				
+							HTML <----------------------------> DOM =================================> jQuery
+					<input checked="checked"/>				obj.checkd; // true/false 나옴		jobj.attr("checked");	// 문자그대로 원하면 선택
+					<input checked />															jobj.prop("checked");	// DOM의 특성값 원하면 선택
+					<input required="required"/>
+					<input required />
+						
+				
+				 */
+
+				if ('content' in template.get(0)) { // 현 브라우저가 template 태그 지원하는지에 대한 확인
+
+					for (var i = 0; i < data.length; i++) {
+						var clone = $(document.importNode(template
+								.prop("content"), true)); // jQuery가 지원해주지 않아 그대로 사용하고 jQuery로 만들어줌
+
+						var tds = clone.find("td");
+						//tds.eq(0).html(tds.eq(0).html() + data[i].id);		// get(0)은 DOM으로 내릴 때
+						tds.eq(0).append(data[i].id); // 위의 방법과 동일
+						tds.eq(1).text(data[i].title);
+						tds.eq(2).text(data[i].writerId);
+
+						tbody.append(clone);
+					}
+
+				}
+
+			});
+
+			/* ajaxBtn.click(function(e){
+				
+			var xhr = new XMLHttpRequest();
+			
+			xhr.load(function(){
+				data = JSON.parse(xhr.responseText);
+				container.removeChild(container.lastChild);
+			});
+			
+			xhr.error(function(e){
+				alert("예기치 못한 오류가 발생하였습니다.");
+			});
+			
+			xhr.open("GET", "../../customer/notice-ajax", true);
+			xhr.send();   
+
+			var img = document.createElement("img");
+			img.src = "../images/ajax-loader.gif";
+			container.append(img);
+			
+			}); */
+
+			// 2. Ajax 요청하기
+			ajaxButton.click(function(e) {
+
+				$.ajaxSetup({
+					scriptCharset : "utf-8",
+					contentType : "application/json; charset=utf-8"
+				});
+				//3. jquery.get()으로 문서를 요청한 방식 
+				$.getJSON("../../customer/notice-ajax")
+				.done(function(data) {
+					alert(data);
+					console.log("공통")
+				}).fail(function() {
+					//console.log("공통")
+				}).always(function() {
+					console.log("공통")
+				})
+			});
 		});
 	</script>
 
